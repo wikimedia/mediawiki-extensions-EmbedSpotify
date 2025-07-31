@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\Html\Html;
+
 class EmbedSpotify {
 	/**
 	 * Bind the renderPoem function to the <spotify> tag
@@ -16,22 +19,20 @@ class EmbedSpotify {
 	 * @return string
 	 */
 	public static function renderSpotify( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$input = htmlspecialchars( $input );
+		$input = htmlspecialchars( $input ?? '' );
 		if ( empty( $args['width'] ) ) {
 			$args['width'] = '300px';
 		}
 		if ( empty( $args['height'] ) ) {
 			$args['height'] = '380px';
 		}
-		$args['width'] = htmlspecialchars( $args['width'] );
-		$args['height'] = htmlspecialchars( $args['height'] );
-		return Html::rawElement( 'iframe', [
+		return Html::element( 'iframe', [
 			'src' => "https://open.spotify.com/embed/$input",
 			'width' => $args['width'],
 			'height' => $args['height'],
 			'frameborder' => '0',
 			'allowtransparency' => 'true',
 			'allow' => 'encrypted-media'
-		], '' );
+		] );
 	}
 }
